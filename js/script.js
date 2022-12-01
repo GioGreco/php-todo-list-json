@@ -11,23 +11,50 @@ const app = createApp({
     },
     methods: {
         getData(){
-            axios.get('../php-todo-list-json/server.php').then((res)=>{
+            axios.get('./server.php/').then((res)=>{
                 this.myData = res.data;
                 console.log(this.myData);
             })
         },
         sendData(){
             const data = {
-                text: this.newTodoText
+                newTodoText: this.newTodoText
             }
 
-            axios.post('../php-todo-list-json/server.php', data, {headers:{'Content-Type': 'multipart/form-data'}}).then((res)=>{
+            axios.post('./server.php/', data, {headers: {'Content-Type': 'multipart/form-data'}}).then((res)=>{
+                console.log(res.data);
                 this.newTodoText = '';
                 this.getData();
             })
+        },
+        toggleTodo(index){
+            // console.log(index)
+
+            const todoFormData = {
+                toggleTodoIndex: index,
+            }
+
+            axios.post('./server.php/', todoFormData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res)=>{
+                console.log(res.data);
+            })
+
+            this.getData();
+        },
+        deleteTodo(index){
+            // console.log(index);
+
+            const todoFormData = {
+                deleteTodoIndex : index
+            }
+
+            axios.post('./server.php/', todoFormData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res)=>{
+                console.log(res.data);
+            })
+
+            this.getData();
         }
     },
-    created(){
+    mounted(){
         this.getData();
     }
 }).mount('#app')

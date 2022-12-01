@@ -12,14 +12,14 @@
 <body>
     <div id="app">
         <div class="add">
-            <input v-model="newTodoText" type="text" name="newTODO" id="newTODO" placeholder="insert new task">
+            <input v-model="newTodoText" type="text" name="newTodoText" id="newTodoText" placeholder="insert new task">
             <button @click="sendData">INVIA</button>
         </div>
         
 
         <h2>LISTA TO-DO</h2>
         <ul>
-            <li v-for="(todo, index) in myData" :key="index" :class="todo.done ? 'done' : ''">{{todo.text}}</li>
+            <li v-for="(todo, index) in myData" :key="index" :class="todo.done ? 'done' : ''" @click="toggleTodo(index)">{{todo.text}} <span @click.stop="deleteTodo(index)">XXX</span></li>
         </ul>
     </div>
 
